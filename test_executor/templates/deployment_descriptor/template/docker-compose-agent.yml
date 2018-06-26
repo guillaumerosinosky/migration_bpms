@@ -1,0 +1,25 @@
+# Use tech_user/secret as user/password credentials
+version: '3'
+
+services:
+  bpm-agent:
+    image: bpmsagent
+    depends_on:
+      - bonita-to
+    restart: always
+    deploy:
+      placement:
+        constraints:
+          - node.labels.type == agent
+    volumes:
+       - /home/ubuntu/config.txt:/tmp/config.txt
+    environment:
+      - BPMSNAME=bonita
+      - URL=http://${DESTINATION}/bonita
+      - CONFIGFILE=/tmp/config.txt
+    entrypoint:
+      - bash
+      - -c
+      - |
+        set -e
+        java -jar bpms.jar $$BPMSNAME $$URL $$CONFIGFILE

@@ -1,0 +1,42 @@
+version: '3'
+volumes:
+  faban_master_conf:
+
+    driver: local
+  faban_output:
+
+    driver: local
+  faban_config:
+
+    driver: local
+  faban_logs:
+
+    driver: local
+  faban_master_logs:
+
+    driver: local
+  faban_services:
+
+    driver: local
+  faban_benchmarks:
+
+    driver: local
+services:
+  faban-harness:
+    image: benchflow/faban:harness_dev
+    environment:
+      IS_RANCHER: 'false'
+    stdin_open: true
+    volumes:
+    - faban_master_conf:/app/faban/master/conf
+    - faban_benchmarks:/app/faban/benchmarks
+    - faban_config:/app/faban/config
+    - faban_logs:/app/faban/logs
+    - faban_master_logs:/app/faban/master/logs
+    - faban_output:/app/faban/output
+    - faban_services:/app/faban/services
+    - /etc/localtime:/etc/localtime:ro
+    - /etc/timezone:/etc/timezone:ro
+    tty: true
+    ports:
+    - 9980:9980/tcp

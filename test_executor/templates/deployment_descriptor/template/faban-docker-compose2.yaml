@@ -1,0 +1,12 @@
+version: '3'
+services:
+  faban-agent:
+    image: benchflow/faban:agent_dev
+    environment:
+      IS_RANCHER: 'true'
+    stdin_open: true
+    volumes:
+    - /etc/localtime:/etc/localtime:ro
+    - /etc/timezone:/etc/timezone:ro
+    tty: true
+

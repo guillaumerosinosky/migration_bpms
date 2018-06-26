@@ -1,0 +1,79 @@
+# Use tech_user/secret as user/password credentials
+version: '3'
+
+services:
+  bonita-from:
+    hostname: bonita
+    image: bonitasoft/bonita-subscription:7.4.3-fdw
+    ports:
+      - 8080:8080
+    volumes:
+       - /home/ubuntu/lic/:/opt/bonita_lic
+    environment:
+      - POSTGRES_ENV_POSTGRES_PASSWORD=migrationTestDb_18
+      - DB_VENDOR=postgres
+      - DB_HOST=db-dbpostgres-db-from1.postgres.database.azure.com
+      - DB_ADMIN_USER=postgres@db-dbpostgres-db-from1
+      - DB_ADMIN_PASS=migrationTestDb_18
+      - DB_NAME=bonitadb
+      - DB_USER=bonitauser@db-dbpostgres-db-from1
+      - DB_PASS=migrationTestDb_18
+      - TENANT_LOGIN=install
+      - TENANT_PASSWORD=install
+      - PLATFORM_LOGIN=platformAdmin
+      - PLATFORM_PASSWORD=platform
+      - REPOSITORY_HOST=db-dbpostgres-db-ref.postgres.database.azure.com
+      - REPOSITORY_PORT=5432
+      - REPOSITORY_NAME=postgres
+      - REPOSITORY_USER=postgres@db-dbpostgres-db-ref
+      - REPOSITORY_PASS=migrationTestDb_18
+    restart: on-failure:2
+    deploy:
+      placement:
+        constraints:
+          - node.labels.type == bonita
+          - node.labels.stack_name == from
+    entrypoint:
+      - bash
+      - -c
+      - |
+        set -e
+        exec /opt/files/startup.sh
+
+  bonita-to:
+    hostname: bonita
+    image: bonitasoft/bonita-subscription:7.4.3-fdw
+    ports:
+      - 8081:8080
+    volumes:
+       - /home/ubuntu/lic/:/opt/bonita_lic
+    environment:
+      - POSTGRES_ENV_POSTGRES_PASSWORD=migrationTestDb_18
+      - DB_VENDOR=postgres
+      - DB_HOST=db-dbpostgres-db-to1.postgres.database.azure.com
+      - DB_ADMIN_USER=postgres@db-dbpostgres-db-to1
+      - DB_ADMIN_PASS=migrationTestDb_18
+      - DB_NAME=bonitadb
+      - DB_USER=bonitauser@db-dbpostgres-db-to1
+      - DB_PASS=migrationTestDb_18
+      - TENANT_LOGIN=install
+      - TENANT_PASSWORD=install
+      - PLATFORM_LOGIN=platformAdmin
+      - PLATFORM_PASSWORD=platform
+      - REPOSITORY_HOST=db-dbpostgres-db-ref.postgres.database.azure.com
+      - REPOSITORY_PORT=5432
+      - REPOSITORY_NAME=postgres
+      - REPOSITORY_USER=postgres@db-dbpostgres-db-ref
+      - REPOSITORY_PASS=migrationTestDb_18
+    restart: on-failure:2
+    deploy:
+      placement:
+        constraints:
+          - node.labels.type == bonita
+          - node.labels.stack_name == to
+    entrypoint:
+      - bash
+      - -c
+      - |
+        set -e
+        exec /opt/files/startup.sh
