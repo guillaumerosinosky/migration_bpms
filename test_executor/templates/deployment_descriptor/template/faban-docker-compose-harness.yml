@@ -1,0 +1,44 @@
+version: '3.2'
+networks:
+  faban_${TENANT_NAME}:
+    driver: overlay
+services:
+  faban-agent_${TENANT_NAME}:
+    image: benchflow/faban:agent_dev
+    stdin_open: true
+    volumes:
+    - /etc/localtime:/etc/localtime:ro
+    - /etc/timezone:/etc/timezone:ro
+    - /home/ubuntu/bpm:/home/ubuntu/bpm
+    tty: true
+    networks:
+    - faban_${TENANT_NAME}
+    deploy:
+      placement:
+        constraints:
+          - node.labels.type == faban-agent
+          - node.hostname == ${FABAN_IP}
+      restart_policy:
+        condition: any
+  faban-harness_${TENANT_NAME}:
+    image: benchflow/faban:harness_dev
+    stdin_open: true
+    volumes:
+    - /etc/localtime:/etc/localtime:ro
+    - /etc/timezone:/etc/timezone:ro
+    - /home/ubuntu/bpm:/home/ubuntu/bpm
+    tty: true
+    ports:
+    - target: 9980
+      published: 9980
+      protocol: tcp
+      mode: host
+    networks:
+    - faban_${TENANT_NAME}
+    deploy:
+      placement:
+        constraints:
+          - node.labels.type == faban-agent
+          - node.hostname == ${FABAN_IP}
+      restart_policy:
+        condition: any

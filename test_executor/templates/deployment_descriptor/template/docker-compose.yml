@@ -4,6 +4,8 @@ version: '3'
 services:
   db-ref:
     image: postgres:10.3
+    ports:
+      - 5434:5432
     environment:
       POSTGRES_PASSWORD: migrationTestDb_18
     restart: always
@@ -13,7 +15,9 @@ services:
           - node.labels.type == database-ref
     command:
       - -c
-      - max_prepared_transactions=100
+      - max_connections=200
+      - -c
+      - max_prepared_transactions=200
   db-from:
     image: postgres:10.3
     ports:
@@ -30,7 +34,9 @@ services:
       - db-ref
     command:
       - -c
-      - max_prepared_transactions=100
+      - max_connections=200
+      - -c
+      - max_prepared_transactions=200
 
   bonita-from:
     hostname: bonita
@@ -58,13 +64,13 @@ services:
       - REPOSITORY_NAME=postgres
       - REPOSITORY_USER=postgres
       - REPOSITORY_PASS=migrationTestDb_18
-      - WORKER_COREPOOLSIZE=20
-      - WORKER_MAXPOOLSIZE=20 
+      - WORKER_COREPOOLSIZE=100
+      - WORKER_MAXPOOLSIZE=100 
       - SCHEDULER_POOLSIZE=10
       - SCHEDULER_BATCHSIZE=1000
       - DS1_MINPOOLSIZE=1
 #workermaxpoolsize*2 + scheduler_poolsize
-      - DS1_MAXPOOLSIZE=50 
+      - DS1_MAXPOOLSIZE=150 
       - DS2_MINPOOLSIZE=1
       - DS2_MAXPOOLSIZE=20
       - MAX_THREADS=200
@@ -112,7 +118,9 @@ services:
       - db-ref
     command:
       - -c
-      - max_prepared_transactions=100
+      - max_connections=200
+      - -c
+      - max_prepared_transactions=200
 
   bonita-to:
     hostname: bonita
@@ -140,13 +148,13 @@ services:
       - REPOSITORY_NAME=postgres
       - REPOSITORY_USER=postgres
       - REPOSITORY_PASS=migrationTestDb_18
-      - WORKER_COREPOOLSIZE=20
-      - WORKER_MAXPOOLSIZE=20 
+      - WORKER_COREPOOLSIZE=100
+      - WORKER_MAXPOOLSIZE=100 
       - SCHEDULER_POOLSIZE=10
       - SCHEDULER_BATCHSIZE=1000
       - DS1_MINPOOLSIZE=1
 #workermaxpoolsize*2 + scheduler_poolsize
-      - DS1_MAXPOOLSIZE=50 
+      - DS1_MAXPOOLSIZE=150 
       - DS2_MINPOOLSIZE=1
       - DS2_MAXPOOLSIZE=20
       - MAX_THREADS=200
