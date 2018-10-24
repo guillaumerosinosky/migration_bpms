@@ -1,12 +1,12 @@
 # migration_bpms
 
-BPM engines live migration effects on performance evaluation.
+BPM engines live migrations effects on performance benchmarking tool.
 
 ## How does this work ?
-The steps is to instantiate an infrastructure, deploy BPM solutions on it, and evaluate effects of live migrations by simulating users interaction (processes initialization and human tasks processing) and live migrating the BPMS with a planned scenario. 
+The steps is to instantiate an infrastructure (if necessary), deploy BPM solutions on it, and evaluate effects of live migrations by simulating users interaction (processes initialization and human tasks processing) and live migrating the BPMS with a planned scenario. 
 After the simulation, various data on processes and task performance are retrieved from the BPMS database and processed.
 
-## Files
+## What are these files ? How do I begin ?
 
 Main files :
 * cloud-init.ipynb : Jupyter notebook for cloud initialization (VM creation)
@@ -21,14 +21,12 @@ Utility scripts :
 * migrate.sh / migrate2.sh : migrate the concerned tenant from (respectively to) the origin resource
 * come_and_go.sh : Iteratively migrates multiple times from the origin to the resource 
 
-## Libraries usage
+## What do I need to make this work ?
 
-These scripts, are based on Docker Swarm, Ansible, Jupyter Notebooks, and Faban.
+These scripts, are based on Docker Swarm, Ansible, Jupyter Notebooks, and Faban. You should have all these tools installed. 
 Uses AgentBPM (https://github.com/Chahrazed-l/AgentBPMS) for customer simulation, and live migration scripts (soon to be referenced).
 
-## Work in progress 
+In the current state of this repository, there is still a few files to be added (Ansible scripts and Live Migration containers are not yet ready to be shared). We are working on it.
 
-TODO : add Ansible scripts for infrastructure initialization and retrieval
-TODO : add reference for Live Migration scripts (Camunda)
 
 
