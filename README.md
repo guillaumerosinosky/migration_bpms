@@ -24,7 +24,7 @@ Utility scripts :
 ## Libraries usage
 
 These scripts, are based on Docker Swarm, Ansible, Jupyter Notebooks, and Faban.
-Uses AgentBPM (https://github.com/Chahrazed-l/AgentBmps.git) for customer simulation, and live migration scripts (soon to be referenced).
+Uses AgentBPM (https://github.com/Chahrazed-l/AgentBPMS) for customer simulation, and live migration scripts (soon to be referenced).
 
 ## Work in progress 
 
