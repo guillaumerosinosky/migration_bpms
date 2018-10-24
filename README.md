@@ -21,6 +21,11 @@ Utility scripts :
 * migrate.sh / migrate2.sh : migrate the concerned tenant from (respectively to) the origin resource
 * come_and_go.sh : Iteratively migrates multiple times from the origin to the resource 
 
+## What can we do with it ?
+
+See coopis2018/xp_paper.ipynb file for the results obtained a modified version of Bonita 7.3.2 Performance edition. 
+
+
 ## What do I need to make this work ?
 
 These scripts, are based on Docker Swarm, Ansible, Jupyter Notebooks, and Faban. You should have all these tools installed. 
