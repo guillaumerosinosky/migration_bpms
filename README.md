@@ -23,7 +23,7 @@ Utility scripts :
 
 ## What can we do with it ?
 
-See coopis2018/xp_paper.ipynb file for the results obtained a modified version of Bonita 7.3.2 Performance edition, on Azure VMs. (Thanks a lot to Azure Sponsorship and Microsoft for these) 
+See coopis2018/xp_paper.ipynb file for the results obtained a modified version of Bonita 7.3.2 Performance edition. Tests have be conducted on [Azure](https://azure.microsoft.com) VMs (Thanks a lot to Azure Sponsorship and Microsoft).
 
 
 ## What do I need to make this work ?
